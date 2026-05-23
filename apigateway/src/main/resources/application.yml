@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      routes:
+        - id: account-service
+          uri: lb://SPRINGAPPACCOUNTSERVICE
+          predicates:
+            - Path=/api/accounts/**
+        - id: account-request-service
+          uri: lb://SPRINGAPPACCOUNTSERVICE
+          predicates:
+            - Path=/api/account-requests/**
+        - id: payment-service
+          uri: lb://SPRINGAPPPAYMENTSERVICE
+          predicates:
+            - Path=/api/payments/**
+        - id: transaction-service
+          uri: lb://SPRINGAPPTRANSACTIONSERVICE
+          predicates:
+            - Path=/api/transactions/**
+        - id: user-service
+          uri: lb://SPRINGAPPUSERSERVICE
+          predicates:
+            - Path=/api/users/**
+        - id: auth-service
+          uri: lb://SPRINGAPPUSERSERVICE
+          predicates:
+            - Path=/api/auth/**
+        - id: chat-service
+          uri: lb://SPRINGAPPUSERSERVICE
+          predicates:
+            - Path=/api/chat/**
+        - id: notification-service
+          uri: lb://SPRINGAPPUSERSERVICE
+          predicates:
+            - Path=/api/notifications/**
+        - id: session-service
+          uri: lb://SPRINGAPPUSERSERVICE
+          predicates:
+            - Path=/api/sessions/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+jwt:
+  secret: ${JWT_SECRET:change-this-secret-to-at-least-32-characters}
