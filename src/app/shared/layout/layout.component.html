@@ -1,0 +1,28 @@
+<header class="topbar">
+  <a class="brand" routerLink="/dashboard">
+    <span class="brand-mark">F</span>
+    <span>FinanceApp<small>ONLINE</small></span>
+  </a>
+
+  <nav class="nav">
+    @for (link of links(); track link.path) {
+      <a [routerLink]="link.path" routerLinkActive="active">{{ link.label }}</a>
+    }
+  </nav>
+
+  @if (user(); as currentUser) {
+    <div class="user-chip">
+      {{ currentUser.firstName || currentUser.username }}
+      <span class="role-pill">{{ currentUser.role }}</span>
+    </div>
+  }
+  <button class="logout" type="button" (click)="logout()">Logout</button>
+</header>
+
+@if (loading()) {
+  <div class="loading-bar"></div>
+}
+
+<main class="main">
+  <router-outlet />
+</main>

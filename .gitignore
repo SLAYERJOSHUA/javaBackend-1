@@ -1,18 +1,6 @@
-# Java
-target/
-*.class
-
-# Angular / Node
 node_modules/
 dist/
 .angular/
-
-# IDE / OS
-.idea/
-.vscode/
-*.iml
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+.env
+npm-debug.log*
+yarn-error.log*

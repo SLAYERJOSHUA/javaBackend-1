@@ -1,0 +1,53 @@
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>Finance Dashboard</h2>
+      <p class="muted">Welcome back, {{ user()?.firstName || user()?.username }}.</p>
+    </div>
+  </div>
+  <div class="grid three">
+    <div class="metric"><span class="tiny">Current Balance</span><strong>{{ totalBalance() | currency:'INR' }}</strong></div>
+    <div class="metric"><span class="tiny">Accounts</span><strong>{{ accounts().length }}</strong></div>
+    <div class="metric"><span class="tiny">Recent Payments</span><strong>{{ payments().length }}</strong></div>
+  </div>
+</section>
+
+@if (isAdmin()) {
+  <section class="panel">
+    <h3>Transaction Overview Last 7 Days</h3>
+    <div class="grid" style="grid-template-columns: repeat(7, 1fr); align-items:end; height:220px">
+      @for (day of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']; track day; let i = $index) {
+        <div style="display:grid;gap:8px;align-content:end;text-align:center">
+          <strong>{{ i + 2 }}</strong>
+          <div [style.height.px]="barHeight(i)" style="background:#52647c;border-radius:4px 4px 0 0"></div>
+          <span class="tiny">{{ day }}</span>
+        </div>
+      }
+    </div>
+  </section>
+}
+
+<section class="panel">
+  <div class="panel-head"><h3>Recent Transactions</h3></div>
+  @if (transactions().length) {
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>No.</th><th>Account</th><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>
+          @for (row of transactions().slice(0, 5); track row.transactionId) {
+            <tr>
+              <td>{{ row.transactionNumber }}</td>
+              <td>{{ row.accountId }}</td>
+              <td>{{ row.transactionType }}</td>
+              <td><span class="amount-pill">{{ row.amount | currency:'INR' }}</span></td>
+              <td><span class="status {{ row.status | statusClass }}">{{ row.status }}</span></td>
+              <td>{{ row.createdAt | date:'medium' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="empty">No transactions yet.</div>
+  }
+</section>

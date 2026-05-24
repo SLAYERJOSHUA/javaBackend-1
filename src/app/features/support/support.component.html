@@ -1,0 +1,29 @@
+<section class="split">
+  <div class="panel">
+    <div class="panel-head"><div><h2>Support System</h2><p class="muted">Chat with support or raise general queries.</p></div></div>
+    <div class="chat-box">
+      @for (message of messages(); track message.id) {
+        <div class="message" [class.mine]="message.senderId === userId">
+          <strong>{{ message.senderRole }}</strong><br>
+          {{ message.message }}
+          <div class="tiny">{{ message.createdAt | date:'medium' }}</div>
+        </div>
+      } @empty {
+        <div class="empty">No messages yet.</div>
+      }
+    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <input formControlName="message" placeholder="Type your message...">
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </div>
+  <aside class="panel faq">
+    <h2>FAQ</h2>
+    <dl>
+      <dt>How do I generate my PIN?</dt><dd>Open My Accounts and use Generate PIN after approval.</dd>
+      <dt>How do I check my balance?</dt><dd>Dashboard and account cards show the latest fetched balance.</dd>
+      <dt>How do I make a payment?</dt><dd>Open Payments, select an account, enter amount and method.</dd>
+      <dt>How do I view transactions?</dt><dd>Open Transactions to see account history and statuses.</dd>
+    </dl>
+  </aside>
+</section>

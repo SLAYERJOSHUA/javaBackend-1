@@ -1,0 +1,29 @@
+<section class="panel">
+  <div class="panel-head">
+    <div><h2>Account Request Approval</h2><p class="muted">Review documents, add notes, approve or reject account access.</p></div>
+    <button class="btn ghost" type="button" (click)="load()">Refresh</button>
+  </div>
+  <div class="grid">
+    @for (request of requests(); track request.requestId) {
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Request #{{ request.requestId }}</h3>
+          <span class="status {{ request.status | statusClass }}">{{ request.status }}</span>
+        </div>
+        <p><strong>User ID:</strong> {{ request.userId }}</p>
+        <p><strong>Account Type:</strong> {{ request.accountType }}</p>
+        <p><strong>Initial Deposit:</strong> {{ request.initialDeposit | currency:'INR' }}</p>
+        <p><strong>Purpose:</strong> {{ request.purpose || 'Not provided' }}</p>
+        <p><strong>Submitted:</strong> {{ request.submittedAt || request.createdAt | date:'medium' }}</p>
+        <p><strong>Document:</strong> {{ request.documentName || 'Uploaded document' }}</p>
+        <label class="field"><span>Review Notes</span><textarea [ngModel]="notes()[request.requestId] || ''" (ngModelChange)="setNote(request.requestId, $event)"></textarea></label>
+        <div class="actions">
+          <button class="btn good" type="button" (click)="approve(request.requestId)">Approve</button>
+          <button class="btn bad" type="button" (click)="reject(request.requestId)">Reject</button>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty">No account requests.</div>
+    }
+  </div>
+</section>

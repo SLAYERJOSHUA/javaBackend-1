@@ -1,0 +1,14 @@
+<main class="auth-wrap">
+  <section class="auth-card">
+    <div class="brand"><span class="brand-mark">F</span><span>Finance Application<small>ONLINE</small></span></div>
+    <h1>Login</h1>
+    <p class="muted">Access your accounts, payments, transactions, and support.</p>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field"><span>Username</span><input formControlName="username" autocomplete="username" placeholder="Enter your username"></label>
+      <label class="field"><span>Password</span><input formControlName="password" type="password" autocomplete="current-password" placeholder="Enter your password"></label>
+      <div class="error">@if (form.touched && form.invalid) { Enter username and password. }</div>
+      <button class="btn" type="submit">Login</button>
+    </form>
+    <p class="tiny">Do not have an account? <a class="link-btn" routerLink="/register">Register here</a></p>
+  </section>
+</main>

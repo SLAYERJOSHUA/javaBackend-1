@@ -1,0 +1,36 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 7vw;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(8px);
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 800; text-decoration: none; }
+.brand-mark {
+  display: grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 6px;
+  color: white; background: var(--brand-2); font-size: 16px;
+}
+.brand small { display: block; color: var(--good); font-size: 11px; line-height: 1; }
+.nav { display: flex; align-items: center; gap: 6px; flex: 1; flex-wrap: wrap; }
+.nav a {
+  border: 0; border-radius: 5px; padding: 7px 10px;
+  color: var(--muted); background: transparent; text-decoration: none;
+}
+.nav a.active { color: white; background: var(--brand-2); }
+.user-chip { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.logout { border: 0; border-radius: 5px; padding: 7px 10px; color: white; background: var(--bad); }
+.loading-bar {
+  position: fixed; top: 49px; left: 0; right: 0; z-index: 11;
+  height: 3px; background: var(--info); animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: .4; } }
+@media (max-width: 760px) {
+  .topbar { padding: 10px 14px; align-items: flex-start; }
+  .nav { order: 3; flex-basis: 100%; }
+}

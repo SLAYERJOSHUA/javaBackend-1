@@ -1,0 +1,44 @@
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>Accounts</h2>
+      <p class="muted">Request accounts, view balances, and generate PINs.</p>
+    </div>
+    <button class="btn good" type="button" (click)="showRequestForm.set(!showRequestForm())">New Account</button>
+  </div>
+  @if (!activeAccountExists()) {
+    <div class="notice">Account access is locked until a request is approved. Support remains available.</div>
+  }
+</section>
+
+@if (showRequestForm()) {
+  <section class="panel">
+    <h3>Create New Account</h3>
+    <form class="grid" [formGroup]="form" (ngSubmit)="submitRequest()">
+      <label class="field"><span>Account Type</span><select formControlName="accountType"><option>SAVINGS</option><option>CHECKING</option><option>INVESTMENT</option></select></label>
+      <label class="field"><span>Initial Deposit</span><input type="number" formControlName="initialDeposit"></label>
+      <label class="field"><span>Purpose</span><textarea formControlName="purpose" placeholder="In 2-3 lines, explain the account purpose."></textarea></label>
+      <label class="field"><span>Document Name</span><input formControlName="documentName" placeholder="aadhaar.png"></label>
+      <div class="error">@if (form.touched && form.invalid) { Fill all required request details. }</div>
+      <button class="btn" type="submit">Submit Request</button>
+    </form>
+  </section>
+}
+
+<section class="grid two">
+  @for (account of accounts(); track account.accountId) {
+    <article class="panel">
+      <div class="panel-head"><h3>{{ account.accountType }}</h3><span class="status {{ account.status | statusClass }}">{{ account.status }}</span></div>
+      <p class="tiny">Account number</p>
+      <strong>{{ account.accountNumber | accountNumber }}</strong>
+      <p class="tiny">Balance</p>
+      <h2>{{ account.balance | currency:'INR' }}</h2>
+      <div class="actions">
+        <button class="btn ghost" type="button" (click)="refreshBalance(account.accountId)">Refresh Balance</button>
+        <button class="btn" type="button" (click)="generatePin(account.accountId)">Generate PIN</button>
+      </div>
+    </article>
+  } @empty {
+    <div class="empty">No accounts found.</div>
+  }
+</section>

@@ -1,0 +1,28 @@
+<section class="panel">
+  <div class="panel-head"><div><h2>Transaction History</h2><p class="muted">Create deposits, withdrawals, and transfers.</p></div></div>
+  <form class="grid two" [formGroup]="form" (ngSubmit)="submit()">
+    <label class="field"><span>Account</span><select formControlName="accountId">@for (account of accounts(); track account.accountId) { <option [value]="account.accountId">{{ account.accountType }} - {{ account.accountNumber }}</option> }</select></label>
+    <label class="field"><span>Type</span><select formControlName="transactionType"><option>TRANSFER</option><option>DEPOSIT</option><option>WITHDRAWAL</option></select></label>
+    <label class="field"><span>Amount</span><input type="number" formControlName="amount"></label>
+    <label class="field"><span>Description</span><input formControlName="description"></label>
+    <button class="btn" type="submit">Create Transaction</button>
+  </form>
+</section>
+<section class="panel">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>No.</th><th>Account</th><th>Type</th><th>Amount</th><th>Status</th><th>Description</th><th>Date</th><th>Action</th></tr></thead>
+      <tbody>
+        @for (row of transactions(); track row.transactionId) {
+          <tr>
+            <td>{{ row.transactionNumber }}</td><td>{{ row.accountId }}</td><td>{{ row.transactionType }}</td>
+            <td><span class="amount-pill">{{ row.amount | currency:'INR' }}</span></td>
+            <td><span class="status {{ row.status | statusClass }}">{{ row.status }}</span></td>
+            <td>{{ row.description }}</td><td>{{ row.createdAt | date:'medium' }}</td>
+            <td>@if (isAdmin()) { <button class="btn ghost" type="button" (click)="updateStatus(row.transactionId, 'COMPLETED')">Complete</button> }</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

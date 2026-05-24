@@ -1,0 +1,39 @@
+<section class="panel">
+  <div class="panel-head">
+    <div><h2>User Management</h2><p class="muted">Deactivate, promote, change roles, and search user accounts.</p></div>
+    <button class="btn ghost" type="button" (click)="load()">Refresh</button>
+  </div>
+  <div class="actions" style="margin-bottom:12px">
+    <input [ngModel]="query()" (ngModelChange)="query.set($event)" placeholder="Search by name, username, email, or phone">
+    <select [ngModel]="roleFilter()" (ngModelChange)="roleFilter.set($event)">
+      <option value="">All roles</option>
+      <option>ACCOUNT_HOLDER</option>
+      <option>CUSTOMER_SUPPORT</option>
+      <option>ADMIN</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ID</th><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+      <tbody>
+        @for (user of filtered(); track user.id) {
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td><span class="role-pill">{{ user.role }}</span></td>
+            <td><span class="status" [class.active]="user.isActive" [class.inactive]="!user.isActive">{{ user.isActive ? 'Active' : 'Inactive' }}</span></td>
+            <td>{{ user.createdAt | date:'medium' }}</td>
+            <td class="actions">
+              <button class="btn icon ghost" type="button" title="Admin" (click)="setRole(user, 'ADMIN')">A</button>
+              <button class="btn icon ghost" type="button" title="Support" (click)="setRole(user, 'CUSTOMER_SUPPORT')">S</button>
+              <button class="btn icon" [class.bad]="user.isActive" [class.good]="!user.isActive" type="button" (click)="toggle(user)">{{ user.isActive ? 'X' : 'Y' }}</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+<main class="auth-wrap">
+  <section class="auth-card">
+    <div class="brand"><span class="brand-mark">F</span><span>Finance Application<small>ONLINE</small></span></div>
+    <h1>Register</h1>
+    <p class="muted">Create your profile before requesting an account.</p>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid two">
+        <label class="field"><span>First Name</span><input formControlName="firstName"></label>
+        <label class="field"><span>Last Name</span><input formControlName="lastName"></label>
+      </div>
+      <label class="field"><span>Username</span><input formControlName="username"></label>
+      <label class="field"><span>Email</span><input formControlName="email" type="email"></label>
+      <label class="field"><span>Password</span><input formControlName="password" type="password"></label>
+      <div class="grid two">
+        <label class="field"><span>Phone</span><input formControlName="phone" inputmode="numeric" maxlength="10"></label>
+        <label class="field"><span>Date of Birth</span><input formControlName="dateOfBirth" type="date"></label>
+      </div>
+      <label class="field"><span>Address</span><input formControlName="address"></label>
+      <div class="error">@if (form.touched && form.invalid) { Use valid email, 10 digit phone, and strong password. }</div>
+      <button class="btn" type="submit">Register</button>
+    </form>
+    <p class="tiny">Already have an account? <a class="link-btn" routerLink="/login">Login here</a></p>
+  </section>
+</main>

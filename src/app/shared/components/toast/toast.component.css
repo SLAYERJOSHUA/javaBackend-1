@@ -1,0 +1,6 @@
+.toast {
+  position: fixed; right: 18px; bottom: 18px; z-index: 30;
+  max-width: 360px; padding: 12px 14px; border-radius: 8px;
+  color: white; background: var(--brand-2); box-shadow: var(--shadow);
+}
+.toast.bad { background: var(--bad); }
